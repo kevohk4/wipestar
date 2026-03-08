@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wipestar Limited | Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"/>
+
+<style>
+/* ============================================================
+   TOKENS & RESET
+============================================================ */
+:root {
+  --bg:        #000;
+  --bg2:       #0a0a0a;
+  --text:      #fff;
+  --accent:    #f84538;
+  --accent2:   #ff7b74;
+  --glass:     rgba(255,255,255,.05);
+  --border:    rgba(255,255,255,.12);
+  --ease:      cubic-bezier(.25,.46,.45,.94);
+  --spring:    cubic-bezier(.34,1.56,.64,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   ANIMATED BACKGROUND MESH
+============================================================ */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(248,69,56,.12), transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(248,69,56,.06), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,80,60,.04), transparent 55%);
+  animation: mesh 24s linear infinite alternate;
+  pointer-events: none;
+}
+@keyframes mesh {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.1) rotate(3deg); }
+}
+
+/* Grid overlay */
+body::after {
+  content: "";
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+/* Spotlight cursor */
+.spotlight {
+  position: fixed;
+  width: 320px; height: 320px;
+  pointer-events: none; border-radius: 50%;
+  background: radial-gradient(circle, rgba(248,69,56,.12), transparent 65%);
+  transform: translate(-50%, -50%);
+  z-index: 1; transition: transform .06s linear;
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  text-align: center;
+  padding: 140px 24px 80px;
+  position: relative; z-index: 2;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-bottom: 24px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block; width: 28px; height: 1px; background: var(--accent);
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 800; letter-spacing: -.03em; line-height: .95;
+  background: linear-gradient(135deg, #fff 40%, var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+.hero p {
+  max-width: 540px; margin: 0 auto; opacity: .65;
+  font-size: 16px; line-height: 1.8; font-weight: 300;
+}
+
+/* ============================================================
+   STICKY SERVICE NAV
+============================================================ */
+.snav {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+}
+.snav-inner {
+  display: flex; gap: 0; overflow-x: auto;
+  scrollbar-width: none; max-width: 1200px; margin: auto;
+}
+.snav-inner::-webkit-scrollbar { display: none; }
+.snav-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 18px 28px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+  background: none; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; white-space: nowrap;
+  transition: color .25s, border-color .25s;
+}
+.snav-btn i { color: var(--accent); font-size: 13px; }
+.snav-btn:hover { color: rgba(255,255,255,.8); }
+.snav-btn.active { color: #fff; border-bottom-color: var(--accent); }
+
+/* ============================================================
+   SERVICE BLOCK
+============================================================ */
+.svc-block {
+  padding: 100px 5%;
+  position: relative; z-index: 2;
+}
+.svc-block:nth-child(odd)  { background: transparent; }
+.svc-block:nth-child(even) { background: rgba(255,255,255,.018); }
+
+.svc-header {
+  max-width: 1200px; margin: 0 auto 56px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap;
+}
+.svc-label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.svc-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
+.svc-title {
+  font-size: clamp(32px, 4.5vw, 54px);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1;
+  color: #fff;
+}
+.svc-title em { color: var(--accent); font-style: normal; }
+.svc-desc {
+  font-size: 14px; color: rgba(255,255,255,.5);
+  line-height: 1.8; max-width: 420px; margin-top: 12px;
+}
+.svc-cta-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border: 1px solid var(--border);
+  border-radius: 4px; font-size: 12px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); flex-shrink: 0; align-self: flex-end;
+  transition: border-color .25s, color .25s;
+}
+.svc-cta-link:hover { border-color: var(--accent); color: var(--accent); }
+.svc-cta-link i { font-size: 10px; transition: transform .25s; }
+.svc-cta-link:hover i { transform: translateX(4px); }
+
+/* ============================================================
+   SUB-SERVICE MOSAIC GRID
+============================================================ */
+.mosaic {
+  max-width: 1200px; margin: auto;
+  display: grid;
+  gap: 3px;
+}
+
+/* Layout patterns per service */
+/* Branding: 1 tall left + 2 stacked right + 2 wide bottom row */
+.mosaic-branding {
+  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-rows: 340px 300px;
+}
+.mosaic-branding .s0 { grid-column: 1; grid-row: 1 / 3; }
+.mosaic-branding .s1 { grid-column: 2; grid-row: 1; }
+.mosaic-branding .s2 { grid-column: 3; grid-row: 1; }
+.mosaic-branding .s3 { grid-column: 2 / 4; grid-row: 2; }
+
+/* Design: 2 wide top + 3 equal bottom */
+.mosaic-design {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 320px 280px;
+}
+.mosaic-design .s0 { grid-column: 1 / 3; grid-row: 1; }
+.mosaic-design .s1 { grid-column: 3; grid-row: 1; }
+.mosaic-design .s2 { grid-column: 1; grid-row: 2; }
+.mosaic-design .s3 { grid-column: 2; grid-row: 2; }
+.mosaic-design .s4 { grid-column: 3; grid-row: 2; }
+
+/* Photography: masonry-style */
+.mosaic-photo {
+  grid-template-columns: 1fr 1.4fr 1fr;
+  grid-template-rows: 280px 280px;
+}
+.mosaic-photo .s0 { grid-column: 1; grid-row: 1; }
+.mosaic-photo .s1 { grid-column: 2; grid-row: 1 / 3; }
+.mosaic-photo .s2 { grid-column: 3; grid-row: 1; }
+.mosaic-photo .s3 { grid-column: 1; grid-row: 2; }
+.mosaic-photo .s4 { grid-column: 3; grid-row: 2; }
+
+/* Print: 3 top + 2 bottom wide */
+.mosaic-print {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 280px 320px;
+}
+.mosaic-print .s0 { grid-column: 1; grid-row: 1; }
+.mosaic-print .s1 { grid-column: 2; grid-row: 1; }
+.mosaic-print .s2 { grid-column: 3; grid-row: 1; }
+.mosaic-print .s3 { grid-column: 1 / 3; grid-row: 2; }
+.mosaic-print .s4 { grid-column: 3; grid-row: 2; }
+
+/* ============================================================
+   TILE
+============================================================ */
+.tile {
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  background: #111;
+}
+
+/* Generated visual backgrounds — rich gradients + SVG art */
+.tile-bg {
+  position: absolute; inset: 0;
+  transition: transform .7s var(--ease);
+}
+.tile:hover .tile-bg { transform: scale(1.08); }
+
+/* Branding colours — deep reds */
+.c-br0 { background: linear-gradient(145deg, #1a0402 0%, #6b0d07 50%, #f84538 100%); }
+.c-br1 { background: linear-gradient(200deg, #0e0101 0%, #5a0808 60%, #c42020 100%); }
+.c-br2 { background: linear-gradient(120deg, #180101 0%, #7a1010 55%, #ff4a30 100%); }
+.c-br3 { background: linear-gradient(165deg, #120202 0%, #601010 55%, #e83020 100%); }
+
+/* Design — blues */
+.c-de0 { background: linear-gradient(145deg, #010614 0%, #082060 50%, #1a50cc 100%); }
+.c-de1 { background: linear-gradient(200deg, #010410 0%, #061848 60%, #1240a8 100%); }
+.c-de2 { background: linear-gradient(120deg, #010814 0%, #0a2870 55%, #1c58dd 100%); }
+.c-de3 { background: linear-gradient(165deg, #010612 0%, #091e58 55%, #1848bb 100%); }
+.c-de4 { background: linear-gradient(180deg, #020714 0%, #0c2260 55%, #2060d0 100%); }
+
+/* Photography — warm ambers */
+.c-ph0 { background: linear-gradient(145deg, #0f0800 0%, #5a3200 50%, #cc7800 100%); }
+.c-ph1 { background: linear-gradient(200deg, #0c0600 0%, #4a2800 60%, #b06000 100%); }
+.c-ph2 { background: linear-gradient(120deg, #100900 0%, #603800 55%, #d88000 100%); }
+.c-ph3 { background: linear-gradient(165deg, #0e0700 0%, #543000 55%, #c27000 100%); }
+.c-ph4 { background: linear-gradient(180deg, #0f0800 0%, #5c3600 55%, #d07a00 100%); }
+
+/* Print — greens */
+.c-pr0 { background: linear-gradient(145deg, #010f02 0%, #073a08 50%, #1a8a1c 100%); }
+.c-pr1 { background: linear-gradient(200deg, #010c01 0%, #063006 60%, #157015 100%); }
+.c-pr2 { background: linear-gradient(120deg, #011002 0%, #094009 55%, #1e9a20 100%); }
+.c-pr3 { background: linear-gradient(165deg, #010e01 0%, #083808 55%, #188018 100%); }
+.c-pr4 { background: linear-gradient(180deg, #011002 0%, #084208 55%, #1c9020 100%); }
+
+/* SVG art layer inside tile */
+.tile-art {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: .13; pointer-events: none; z-index: 1;
+  transition: opacity .5s;
+}
+.tile:hover .tile-art { opacity: .06; }
+.tile-art svg { width: 52%; max-width: 180px; }
+
+/* Noise grain */
+.tile::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .04; pointer-events: none; mix-blend-mode: overlay;
+}
+
+/* Overlay gradient */
+.tile-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.92) 0%,
+    rgba(0,0,0,.5)  45%,
+    rgba(0,0,0,.08) 100%
+  );
+  transition: background .4s;
+}
+.tile:hover .tile-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.96) 0%,
+    rgba(0,0,0,.72) 55%,
+    rgba(0,0,0,.2)  100%
+  );
+}
+
+/* Content */
+.tile-content {
+  position: absolute; inset: 0; z-index: 4;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 22px 20px;
+}
+.tile-icon {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.18);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.45); font-size: 13px;
+  transition: background .3s, border-color .3s, color .3s, transform .4s var(--spring);
+}
+.tile:hover .tile-icon {
+  background: var(--accent); border-color: var(--accent);
+  color: #fff; transform: rotate(45deg);
+}
+.tile-tag {
+  font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin-bottom: 5px;
+}
+.tile-name {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+  color: #fff; line-height: 1.2; margin-bottom: 0;
+}
+.tile-desc {
+  font-size: 12px; color: rgba(255,255,255,.6);
+  line-height: 1.6; margin-top: 7px;
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height .5s var(--ease), opacity .45s, margin-top .4s;
+}
+.tile:hover .tile-desc {
+  max-height: 90px; opacity: 1; margin-top: 8px;
+}
+
+/* Accent line left border on hover */
+.tile::after {
+  content: '';
+  position: absolute; left: 0; bottom: 0; top: auto; z-index: 5;
+  width: 3px; height: 0;
+  background: var(--accent);
+  transition: height .5s var(--ease);
+}
+.tile:hover::after { height: 100%; top: 0; }
+
+/* ============================================================
+   NUMBER BADGE
+============================================================ */
+.tile-num {
+  position: absolute; top: 14px; left: 16px; z-index: 5;
+  font-size: 10px; font-weight: 800; letter-spacing: .1em;
+  color: rgba(255,255,255,.18);
+  transition: color .3s;
+}
+.tile:hover .tile-num { color: rgba(255,255,255,.35); }
+
+/* ============================================================
+   CTA SECTION
+============================================================ */
+.cta-wrap {
+  position: relative; z-index: 2;
+  padding: 100px 5%; text-align: center;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.cta-wrap::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(248,69,56,.08), transparent 60%);
+  pointer-events: none;
+}
+.cta-wrap h2 {
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+  margin-bottom: 16px; position: relative; z-index: 1;
+}
+.cta-wrap h2 span { color: var(--accent); }
+.cta-wrap p {
+  font-size: 15px; color: rgba(255,255,255,.5);
+  max-width: 440px; margin: 0 auto 40px;
+  line-height: 1.8; position: relative; z-index: 1;
+}
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 36px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; cursor: pointer;
+  box-shadow: 0 8px 32px rgba(248,69,56,.35);
+  transition: transform .3s var(--spring), box-shadow .3s;
+  position: relative; z-index: 1;
+}
+.cta-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(248,69,56,.5);
+}
+.cta-btn i { font-size: 12px; transition: transform .3s; }
+.cta-btn:hover i { transform: translateX(5px); }
+
+/* ============================================================
+   REVEAL
+============================================================ */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.reveal.left  { transform: translateX(-30px); }
+.reveal.right { transform: translateX(30px); }
+.reveal.visible { opacity: 1 !important; transform: none !important; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 1000px) {
+  .mosaic-branding,
+  .mosaic-design,
+  .mosaic-photo,
+  .mosaic-print {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .mosaic-branding .s0,
+  .mosaic-branding .s1,
+  .mosaic-branding .s2,
+  .mosaic-branding .s3,
+  .mosaic-design .s0,
+  .mosaic-design .s1,
+  .mosaic-design .s2,
+  .mosaic-design .s3,
+  .mosaic-design .s4,
+  .mosaic-photo .s0,
+  .mosaic-photo .s1,
+  .mosaic-photo .s2,
+  .mosaic-photo .s3,
+  .mosaic-photo .s4,
+  .mosaic-print .s0,
+  .mosaic-print .s1,
+  .mosaic-print .s2,
+  .mosaic-print .s3,
+  .mosaic-print .s4 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .tile { min-height: 240px; }
+  .tile-desc { max-height: 80px !important; opacity: 1 !important; margin-top: 8px !important; }
+}
+@media (max-width: 600px) {
+  .mosaic-branding,
+  .mosaic-design,
+  .mosaic-photo,
+  .mosaic-print {
+    grid-template-columns: 1fr;
+  }
+  .hero { padding: 100px 20px 60px; }
+  .svc-block { padding: 72px 5%; }
+  .svc-cta-link { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="spotlight" id="spotlight"></div>
+
+<!-- ══ HERO ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <p class="hero-eyebrow reveal">What We Offer</p>
+  <h1 class="reveal">Our Services</h1>
+  <p class="reveal">Bold branding. Precise design. Stunning photography. Premium print. Every service crafted to make your business unforgettable.</p>
+</section>
+
+<!-- ══ STICKY SERVICE NAV ════════════════════════════════ -->
+<nav class="snav">
+  <div class="snav-inner">
+    <button class="snav-btn active" data-target="branding">
+      <i class="fas fa-fingerprint"></i> Branding
+    </button>
+    <button class="snav-btn" data-target="design">
+      <i class="fas fa-pen-nib"></i> Graphic Design
+    </button>
+    <button class="snav-btn" data-target="photography">
+      <i class="fas fa-camera"></i> Photography
+    </button>
+    <button class="snav-btn" data-target="print">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════
+     01 · BRANDING
+══════════════════════════════════════════════════════════ -->
+<section class="svc-block" id="branding">
+  <div class="svc-header reveal">
+    <div>
+      <p class="svc-label">01 · Service</p>
+      <h2 class="svc-title">Branding <em>Solutions</em></h2>
+      <p class="svc-desc">We build complete brand systems that give your business a distinct, lasting identity across every surface it touches — from digital to physical.</p>
+    </div>
+    <a href="#" class="svc-cta-link">Start a Project <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="mosaic mosaic-branding reveal">
+
+    <!-- s0: tall left -->
+    <div class="tile s0">
+      <div class="tile-bg c-br0"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="50" stroke="white" stroke-width="1.5"/><circle cx="60" cy="60" r="30" stroke="white" stroke-width="1"/><path d="M60 20V100M20 60H100" stroke="white" stroke-width="1"/><circle cx="60" cy="60" r="8" fill="white" opacity=".4"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">01</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Branding</div>
+        <div class="tile-name">Merchandise Branding</div>
+        <div class="tile-desc">Complete merchandise identity systems — branded items that carry your visual language into the real world and strengthen customer recall at every touchpoint.</div>
+      </div>
+    </div>
+
+    <!-- s1 -->
+    <div class="tile s1">
+      <div class="tile-bg c-br1"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="20" y="30" width="80" height="60" rx="4" stroke="white" stroke-width="1.5"/><ellipse cx="60" cy="60" rx="20" ry="15" stroke="white" stroke-width="1"/><circle cx="60" cy="60" r="5" fill="white" opacity=".4"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">02</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Branding</div>
+        <div class="tile-name">Branded Cups &amp; Mugs</div>
+        <div class="tile-desc">Turning everyday drinkware into silent brand ambassadors for offices, events and retail.</div>
+      </div>
+    </div>
+
+    <!-- s2 -->
+    <div class="tile s2">
+      <div class="tile-bg c-br2"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="25" y="12" width="70" height="96" rx="4" stroke="white" stroke-width="1.5"/><line x1="35" y1="38" x2="85" y2="38" stroke="white" stroke-width="1"/><line x1="35" y1="52" x2="85" y2="52" stroke="white" stroke-width="1"/><line x1="35" y1="66" x2="70" y2="66" stroke="white" stroke-width="1"/><line x1="35" y1="80" x2="55" y2="80" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">03</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Branding</div>
+        <div class="tile-name">Branded Notebooks</div>
+        <div class="tile-desc">Custom cover design, spine branding and interior layout — perfect for corporate gifting and premium giveaways.</div>
+      </div>
+    </div>
+
+    <!-- s3: wide bottom -->
+    <div class="tile s3">
+      <div class="tile-bg c-br3"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 200 100" fill="none"><path d="M30 70 C30 40, 100 40, 100 70 C100 40, 170 40, 170 70 L170 85 L30 85 Z" stroke="white" stroke-width="1.5" fill="none"/><circle cx="100" cy="30" r="22" stroke="white" stroke-width="1.5"/><circle cx="100" cy="30" r="8" fill="white" opacity=".3"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">04</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Branding</div>
+        <div class="tile-name">Uniform &amp; Apparel Branding</div>
+        <div class="tile-desc">Staff uniforms, T-shirts and branded apparel designed to present your team professionally and consistently in every setting. Embroidery, screen printing and vinyl application available.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     02 · GRAPHIC DESIGN
+══════════════════════════════════════════════════════════ -->
+<section class="svc-block" id="design">
+  <div class="svc-header reveal">
+    <div>
+      <p class="svc-label">02 · Service</p>
+      <h2 class="svc-title">Graphic <em>Design</em></h2>
+      <p class="svc-desc">Visually striking graphics that communicate clearly and convert — from digital campaigns to print-ready layouts, every piece built around your brand.</p>
+    </div>
+    <a href="#" class="svc-cta-link">Start a Project <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="mosaic mosaic-design reveal">
+
+    <!-- s0: wide left -->
+    <div class="tile s0">
+      <div class="tile-bg c-de0"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 200 120" fill="none"><circle cx="100" cy="60" r="45" stroke="white" stroke-width="1.5"/><path d="M60 30 L140 90 M140 30 L60 90" stroke="white" stroke-width="1"/><rect x="55" y="25" width="90" height="70" rx="4" stroke="white" stroke-width=".8"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">01</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Design</div>
+        <div class="tile-name">Logo Design</div>
+        <div class="tile-desc">Distinctive, scalable logo marks crafted to represent your brand with clarity and character across all sizes and surfaces — from business cards to billboards.</div>
+      </div>
+    </div>
+
+    <!-- s1 -->
+    <div class="tile s1">
+      <div class="tile-bg c-de1"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="15" y="15" width="40" height="40" stroke="white" stroke-width="1.5"/><rect x="65" y="15" width="40" height="40" stroke="white" stroke-width="1.5"/><rect x="15" y="65" width="40" height="40" stroke="white" stroke-width="1.5"/><rect x="65" y="65" width="40" height="40" stroke="white" stroke-width="1.5"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">02</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Design</div>
+        <div class="tile-name">Social Media Graphics</div>
+        <div class="tile-desc">Scroll-stopping posts, story templates and campaign visuals built for engagement and brand consistency.</div>
+      </div>
+    </div>
+
+    <!-- s2 -->
+    <div class="tile s2">
+      <div class="tile-bg c-de2"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="15" y="25" width="90" height="70" rx="3" stroke="white" stroke-width="1.5"/><line x1="15" y1="50" x2="105" y2="50" stroke="white" stroke-width="1"/><circle cx="38" cy="37" r="7" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">03</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Design</div>
+        <div class="tile-name">Banners &amp; Posters</div>
+        <div class="tile-desc">High-impact designs for digital and print — communicating clearly within seconds.</div>
+      </div>
+    </div>
+
+    <!-- s3 -->
+    <div class="tile s3">
+      <div class="tile-bg c-de3"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="20" y="12" width="80" height="96" rx="3" stroke="white" stroke-width="1.5"/><line x1="30" y1="34" x2="90" y2="34" stroke="white" stroke-width="1"/><line x1="30" y1="50" x2="90" y2="50" stroke="white" stroke-width="1"/><line x1="30" y1="66" x2="70" y2="66" stroke="white" stroke-width="1"/><line x1="30" y1="82" x2="55" y2="82" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">04</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Design</div>
+        <div class="tile-name">Brochures &amp; Flyers</div>
+        <div class="tile-desc">Print-ready layouts designed to inform, persuade and leave lasting impressions.</div>
+      </div>
+    </div>
+
+    <!-- s4 -->
+    <div class="tile s4">
+      <div class="tile-bg c-de4"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="45" stroke="white" stroke-width="1.5" stroke-dasharray="8 4"/><circle cx="60" cy="60" r="25" stroke="white" stroke-width="1"/><circle cx="60" cy="60" r="8" fill="white" opacity=".3"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">05</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Design</div>
+        <div class="tile-name">Infographics</div>
+        <div class="tile-desc">Complex information made beautiful, shareable and easy to understand.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     03 · PHOTOGRAPHY
+══════════════════════════════════════════════════════════ -->
+<section class="svc-block" id="photography">
+  <div class="svc-header reveal">
+    <div>
+      <p class="svc-label">03 · Service</p>
+      <h2 class="svc-title">Photography <em>Services</em></h2>
+      <p class="svc-desc">Professional photography that captures your brand story, your people and your moments with precision, warmth and artistic vision.</p>
+    </div>
+    <a href="#" class="svc-cta-link">Book a Session <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="mosaic mosaic-photo reveal">
+
+    <!-- s0 -->
+    <div class="tile s0">
+      <div class="tile-bg c-ph0"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="15" y="28" width="90" height="64" rx="8" stroke="white" stroke-width="1.5"/><circle cx="60" cy="60" r="20" stroke="white" stroke-width="1.5"/><circle cx="60" cy="60" r="8" stroke="white" stroke-width="1"/><rect x="44" y="18" width="32" height="12" rx="4" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">01</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Photography</div>
+        <div class="tile-name">School Photography</div>
+        <div class="tile-desc">Class photos, individual portraits, events and graduation — preserving memories with care.</div>
+      </div>
+    </div>
+
+    <!-- s1: tall centre -->
+    <div class="tile s1">
+      <div class="tile-bg c-ph1"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 200" fill="none"><circle cx="60" cy="75" r="38" stroke="white" stroke-width="1.5"/><path d="M25 150 C25 118 95 118 95 150 L95 180 L25 180 Z" stroke="white" stroke-width="1.5" fill="none"/><circle cx="60" cy="62" r="14" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">02</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Photography</div>
+        <div class="tile-name">Corporate &amp; Team Portraits</div>
+        <div class="tile-desc">Polished headshots and team photography for websites, profiles and publications — projecting confidence and credibility for your organisation.</div>
+      </div>
+    </div>
+
+    <!-- s2 -->
+    <div class="tile s2">
+      <div class="tile-bg c-ph2"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="20" y="25" width="80" height="60" rx="3" stroke="white" stroke-width="1.5"/><circle cx="60" cy="55" r="18" stroke="white" stroke-width="1"/><path d="M35 90 L35 102 M85 90 L85 102" stroke="white" stroke-width="1.5"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">03</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Photography</div>
+        <div class="tile-name">Product Photography</div>
+        <div class="tile-desc">Studio-quality shots built for e-commerce, catalogues and campaigns.</div>
+      </div>
+    </div>
+
+    <!-- s3 -->
+    <div class="tile s3">
+      <div class="tile-bg c-ph3"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><path d="M15 90 Q35 30 60 55 Q85 78 105 20" stroke="white" stroke-width="1.5" fill="none"/><circle cx="15" cy="90" r="4" fill="white" opacity=".5"/><circle cx="105" cy="20" r="4" fill="white" opacity=".5"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">04</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Photography</div>
+        <div class="tile-name">Event Photography</div>
+        <div class="tile-desc">Capturing key moments at conferences, launches and celebrations with fast turnaround.</div>
+      </div>
+    </div>
+
+    <!-- s4 -->
+    <div class="tile s4">
+      <div class="tile-bg c-ph4"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><polygon points="60,15 105,90 15,90" stroke="white" stroke-width="1.5" fill="none"/><line x1="60" y1="40" x2="60" y2="65" stroke="white" stroke-width="1.5"/><circle cx="60" cy="73" r="3.5" fill="white" opacity=".6"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">05</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Photography</div>
+        <div class="tile-name">Aerial &amp; Drone</div>
+        <div class="tile-desc">Dramatic overhead perspectives for properties, events and landscapes.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     04 · PRINT
+══════════════════════════════════════════════════════════ -->
+<section class="svc-block" id="print">
+  <div class="svc-header reveal">
+    <div>
+      <p class="svc-label">04 · Service</p>
+      <h2 class="svc-title">Print <em>Production</em></h2>
+      <p class="svc-desc">Professional printing on premium stock using industry-leading equipment — every piece a physical expression of your brand at its very best.</p>
+    </div>
+    <a href="#" class="svc-cta-link">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="mosaic mosaic-print reveal">
+
+    <!-- s0 -->
+    <div class="tile s0">
+      <div class="tile-bg c-pr0"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="22" y="38" width="76" height="52" rx="3" stroke="white" stroke-width="1.5"/><rect x="16" y="30" width="88" height="10" rx="2" stroke="white" stroke-width="1"/><path d="M16 65 L8 65 L8 88 L112 88 L112 65 L104 65" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">01</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Print</div>
+        <div class="tile-name">Business Cards</div>
+        <div class="tile-desc">Premium cards in standard, folded and die-cut formats — leaving a memorable first impression every time.</div>
+      </div>
+    </div>
+
+    <!-- s1 -->
+    <div class="tile s1">
+      <div class="tile-bg c-pr1"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="12" y="18" width="96" height="84" rx="3" stroke="white" stroke-width="1.5"/><line x1="12" y1="52" x2="108" y2="52" stroke="white" stroke-width="1"/><line x1="12" y1="72" x2="108" y2="72" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">02</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Print</div>
+        <div class="tile-name">Banners &amp; Signage</div>
+        <div class="tile-desc">Large-format pull-ups, outdoor signage and vinyl prints engineered for visibility and durability.</div>
+      </div>
+    </div>
+
+    <!-- s2 -->
+    <div class="tile s2">
+      <div class="tile-bg c-pr2"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><polygon points="60,18 104,45 104,80 60,108 16,80 16,45" stroke="white" stroke-width="1.5" fill="none"/><circle cx="60" cy="63" r="22" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">03</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Print</div>
+        <div class="tile-name">Certificates &amp; Awards</div>
+        <div class="tile-desc">Elegant designs on premium stock for schools, corporates and recognition events.</div>
+      </div>
+    </div>
+
+    <!-- s3: wide -->
+    <div class="tile s3">
+      <div class="tile-bg c-pr3"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 200 100" fill="none"><path d="M18 28 L100 75 L182 28 L182 88 L18 88 Z" stroke="white" stroke-width="1.5" fill="none"/><line x1="18" y1="28" x2="182" y2="28" stroke="white" stroke-width="1"/><line x1="100" y1="75" x2="100" y2="88" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">04</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Print</div>
+        <div class="tile-name">Packaging &amp; Labels</div>
+        <div class="tile-desc">Custom product packaging, sticker labels and box printing that elevate the unboxing experience and communicate quality from the very first touch.</div>
+      </div>
+    </div>
+
+    <!-- s4 -->
+    <div class="tile s4">
+      <div class="tile-bg c-pr4"></div>
+      <div class="tile-art">
+        <svg viewBox="0 0 120 120" fill="none"><rect x="18" y="12" width="84" height="96" rx="3" stroke="white" stroke-width="1.5"/><line x1="28" y1="36" x2="92" y2="36" stroke="white" stroke-width="1"/><line x1="28" y1="50" x2="92" y2="50" stroke="white" stroke-width="1"/><line x1="28" y1="64" x2="75" y2="64" stroke="white" stroke-width="1"/><line x1="28" y1="78" x2="55" y2="78" stroke="white" stroke-width="1"/></svg>
+      </div>
+      <div class="tile-overlay"></div>
+      <div class="tile-num">05</div>
+      <div class="tile-icon"><i class="fas fa-plus"></i></div>
+      <div class="tile-content">
+        <div class="tile-tag">Print</div>
+        <div class="tile-name">Calendars &amp; Diaries</div>
+        <div class="tile-desc">Branded calendars and diaries that keep your name visible every day of the year.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════════ -->
+<section class="cta-wrap">
+  <h2 class="reveal">Ready to Build Something <span>Legendary?</span></h2>
+  <p class="reveal">Tell us what you need. We'll bring the creative firepower to make it happen.</p>
+  <a href="#" class="cta-btn reveal">
+    Start a Project <i class="fas fa-arrow-right"></i>
+  </a>
+</section>
+
+<script>
+/* ── SPOTLIGHT ───────────── */
+const spot = document.getElementById('spotlight');
+window.addEventListener('mousemove', e => {
+  spot.style.left = e.clientX + 'px';
+  spot.style.top  = e.clientY + 'px';
+}, { passive: true });
+
+/* ── SERVICE NAV ─────────── */
+const snavBtns = document.querySelectorAll('.snav-btn');
+const sections = { branding: 'branding', design: 'design', photography: 'photography', print: 'print' };
+
+snavBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.target);
+    if (!el) return;
+    const offset = document.querySelector('.snav').offsetHeight;
+    window.scrollTo({ top: el.offsetTop - offset - 2, behavior: 'smooth' });
+  });
+});
+
+/* Highlight active pill on scroll */
+const secEls = Object.values(sections).map(id => document.getElementById(id));
+const snavObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      snavBtns.forEach(b => b.classList.toggle('active', b.dataset.target === e.target.id));
+    }
+  });
+}, { threshold: 0.3 });
+secEls.forEach(s => s && snavObs.observe(s));
+
+/* ── SCROLL REVEAL ───────── */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 60);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.09 + 's';
+  revObs.observe(el);
+});
+
+/* ── TILE 3D TILT ────────── */
+document.querySelectorAll('.tile').forEach(tile => {
+  tile.addEventListener('mousemove', e => {
+    const r = tile.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width  / 2) * 0.035;
+    const y = (e.clientY - r.top  - r.height / 2) * 0.035;
+    tile.style.transform = `perspective(700px) rotateY(${x}deg) rotateX(${-y}deg)`;
+  });
+  tile.addEventListener('mouseleave', () => {
+    tile.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg)';
+    tile.style.transition = 'transform .5s cubic-bezier(.25,.46,.45,.94)';
+  });
+  tile.addEventListener('mouseenter', () => {
+    tile.style.transition = 'transform .1s linear';
+  });
+});
+</script>
+</body>
+</html>
